@@ -23,7 +23,13 @@ var Movies = Backbone.Collection.extend({
   comparator: 'title',
 
   sortByField: function(field) {
-    this.comparator = field;
+    if (field === this.comparator) {
+      this.comparator = function(model) {
+        return -model.get(field);
+      };
+    } else {
+      this.comparator = field;
+    }
     this.sort();
   }
 
